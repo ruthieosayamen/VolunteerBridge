@@ -1,0 +1,60 @@
+
+
+---
+
+# VolunteerBridge API Reference
+
+**Base URL:** `https://volunteer-bridge-3.onrender.com`  
+**Authentication:** All protected routes require `Authorization: Bearer <token>`
+
+## 1. Authentication
+| Method | Endpoint | Action | Example Response (JSON) |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/api/auth/register` | Create a new account | `{"message": "User registered successfully", "userId": 12}` |
+| `POST` | `/api/auth/login` | Authenticate & get JWT | `{"token": "eyJhbG...", "role": "admin", "id": 1}` |
+
+---
+
+## 2. Project Management
+| Method | Endpoint | Action | Example Response (JSON) |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/api/projects` | Fetch all projects | `[{"id": 1, "title": "Beach Cleanup", "status": "Active"}]` |
+| `POST` | `/api/projects` | Create a new project | `{"id": 5, "title": "Food Drive", "createdAt": "2026-03-20"}` |
+| `GET` | `/api/projects/:id` | Get project details | `{"id": 1, "title": "Beach Cleanup", "volunteers": 15}` |
+
+---
+
+## 3. Tasks & Coordination
+| Method | Endpoint | Action | Example Response (JSON) |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/api/tasks/user/:id` | View my assigned tasks | `[{"task_id": 101, "name": "Sorting", "status": "Pending"}]` |
+| `POST` | `/api/tasks/:id/assign`| Assign task to users | `{"message": "Task assigned to 3 volunteers"}` |
+| `PUT` | `/api/tasks/:id` | Update task status | `{"task_id": 101, "new_status": "Completed"}` |
+
+---
+
+## 4. Reports & Notifications
+| Method | Endpoint | Action | Example Response (JSON) |
+| :--- | :--- | :--- | :--- |
+| `GET` | `/api/reports/system` | Get global NGO stats | `{"total_projects": 12, "total_hours": 450}` |
+| `GET` | `/api/notifications` | View user alerts | `[{"id": 1, "message": "New project created", "seen": false}]` |
+
+---
+
+## 5. Donations
+| Method | Endpoint | Action | Example Response (JSON) |
+| :--- | :--- | :--- | :--- |
+| `POST` | `/api/donations` | Record a contribution | `{"message": "Donation of $500 recorded", "id": 99}` |
+| `GET` | `/api/donations` | List all records | `[{"id": 99, "donor": "Anonymous", "amount": 500}]` |
+
+## 6. Error responses
+
+| Status | Meaning | Example Response |
+| :--- | :--- | :--- |
+| `401` | Unauthorized | `{"message": "No token, authorization denied"}` |
+| `403` | Forbidden | `{"message": "Access denied: Admins only"}` |
+| `404` | Not Found | `{"message": "Project not found"}` |
+
+
+
+
